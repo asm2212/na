@@ -1,11 +1,11 @@
+
 import 'package:kt_dart/kt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../utils/icon_broken.dart';
-import '../misc/todo_item_presentation_classes.dart';
-import '../../../../../application/notes/note_form/bloc/note_form_bloc.dart';
-import '../../../../../presentation/pages/notes/note_form/misc/build_context_x.dart';
+import 'package:na/application/notes/note_form/bloc/note_form_bloc.dart';
+import 'package:na/presentation/pages/notes/note_form/misc/build_context_x.dart';
+import 'package:na/presentation/pages/notes/note_form/misc/todo_item_presentation_classes.dart';
+import 'package:na/utils/icon_broken.dart';
 
 class AddTodoTile extends StatelessWidget {
   const AddTodoTile({Key? key}) : super(key: key);
@@ -13,9 +13,6 @@ class AddTodoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NoteFormBloc, NoteFormState>(
-      // An example of when we cannot rely on the failure - it happens only when the list contains more than the max limit of items
-      // Unlike with EmailAddress, we definitely don't want to make our user remove the additional todos manually.
-      // We want to prevent even adding them.
       listenWhen: (previous, current) =>
           previous.isEditing != current.isEditing,
       listener: (context, state) {
