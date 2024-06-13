@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:flutter_firebase_ddd/application/auth/auth_bloc.dart';
+import 'package:na/application/auth/auth_bloc.dart';
 import 'package:na/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:na/presentation/routes/router.gr.dart';
 class SignInForm extends StatelessWidget {
@@ -132,7 +132,7 @@ class SignInForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.red[800]),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red[800]),
                       onPressed: () => context
                           .read<SignInFormBloc>()
                           .add(const SignInFormEvent.signInWithGooglePressed()),
