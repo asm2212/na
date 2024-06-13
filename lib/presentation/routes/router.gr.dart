@@ -1,14 +1,4 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-//
-// ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
