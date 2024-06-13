@@ -1,8 +1,7 @@
 import 'package:kt_dart/Kt.dart';
 import 'package:flutter/Widgets.dart';
+import 'package:na/presentation/pages/notes/note_form/misc/todo_item_presentation_classes.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../../presentation/pages/notes/note_form/misc/todo_item_presentation_classes.dart';
 
 extension FormTodosX on BuildContext {
   KtList<TodoItemPrimitive> get formTodos =>

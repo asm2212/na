@@ -1,10 +1,9 @@
 import 'package:kt_dart/kt.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../../../domain/notes/todo_item.dart';
-import '../../../../../domain/core/value_objects.dart';
-import '../../../../../domain/notes/value_objects.dart';
+import 'package:na/domain/core/value_objects.dart';
+import 'package:na/domain/notes/todo_item.dart';
+import 'package:na/domain/notes/value_objects.dart';
 part 'todo_item_presentation_classes.freezed.dart';
 
 class FormTodos extends ValueNotifier<KtList<TodoItemPrimitive>> {

@@ -1,5 +1,7 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:na/application/notes/note_form/bloc/note_form_bloc.dart';
 import 'package:na/domain/notes/note.dart';
 import 'package:na/injection.dart';
@@ -9,28 +11,23 @@ import 'package:na/presentation/pages/notes/note_form/widgets/body_field_widget.
 import 'package:na/presentation/pages/notes/note_form/widgets/color_field_widget.dart';
 import 'package:na/presentation/pages/notes/note_form/widgets/todo_list_widget.dart';
 import 'package:na/presentation/routes/router.gr.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
 
 class NoteFormPage extends StatelessWidget {
   final Note? editedNote;
+
   const NoteFormPage({Key? key, required this.editedNote}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<NoteFormBloc>()
-        ..add(
-          NoteFormEvent.initialized(
-            optionOf(editedNote),
-          ),
-        ),
+        ..add(NoteFormEvent.initialized(optionOf(editedNote))),
       child: BlocConsumer<NoteFormBloc, NoteFormState>(
         listenWhen: (previous, current) =>
-            previous.saveFailureOrSuccessOption !=
-            current.saveFailureOrSuccessOption,
+            previous.saveFailureOrSuccessOption != current.saveFailureOrSuccessOption,
         listener: (context, state) {
           state.saveFailureOrSuccessOption.fold(
             () {}, // none
@@ -40,16 +37,13 @@ class NoteFormPage extends StatelessWidget {
                 FlushbarHelper.createError(
                   title: '⚠ ERROR',
                   duration: const Duration(seconds: 5),
-                  message: failure.when(
-                    unexpected: () =>
-                        "Unexpected error occurred while deleting, please contact support. 👨‍💻",
-                    insufficientPermissions: () => "Insufficient permissions ❌",
-                    unableToUpdate: () => "Impossible error 😵",
+                  message: failure.map(
+                    unexpected: (_) => "Unexpected error occurred while deleting, please contact support. 👨‍💻",
+                    insufficientPermissions: (_) => "Insufficient permissions ❌",
+                    unableToUpdate: (_) => "Impossible error 😵",
                   ),
                 ).show(context);
               },
-
-              /// because flushbar(snackbar) is treated like route
               (_) => context.router.popUntil(
                 (route) => route.settings.name == NotesOverviewPageRoute.name,
               ),
@@ -60,9 +54,7 @@ class NoteFormPage extends StatelessWidget {
         builder: (context, state) => Stack(
           children: [
             const NoteFormPageScaffold(),
-            SavingInProgressOverlay(
-              isSaving: state.isSaving,
-            ),
+            SavingInProgressOverlay(isSaving: state.isSaving),
           ],
         ),
       ),
@@ -72,14 +64,11 @@ class NoteFormPage extends StatelessWidget {
 
 class SavingInProgressOverlay extends StatelessWidget {
   final bool isSaving;
-  const SavingInProgressOverlay({
-    Key? key,
-    required this.isSaving,
-  }) : super(key: key);
+
+  const SavingInProgressOverlay({Key? key, required this.isSaving}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var headline6;
     return IgnorePointer(
       ignoring: !isSaving,
       child: AnimatedContainer(
@@ -95,15 +84,10 @@ class SavingInProgressOverlay extends StatelessWidget {
                   color: Colors.green[600],
                   backgroundColor: Colors.blue[600],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: Text(
-                    'Saving',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Colors.white),
-                  ),
+                const SizedBox(height: 8),
+                Text(
+                  'Saving',
+                  style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white),
                 ),
               ],
             ),
@@ -122,46 +106,39 @@ class NoteFormPageScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<NoteFormBloc, NoteFormState>(
-          buildWhen: (previous, current) =>
-              previous.isEditing != current.isEditing,
+          buildWhen: (previous, current) => previous.isEditing != current.isEditing,
           builder: (context, state) {
-            return Text(state.isEditing
-                ? 'Edit your note 👨‍🏫'
-                : 'Create new note 💪');
+            return Text(state.isEditing ? 'Edit your note 👨‍🏫' : 'Create new note 💪');
           },
         ),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: () => context.read<NoteFormBloc>().add(
-                  const NoteFormEvent.saved(),
-                ),
+            onPressed: () => context.read<NoteFormBloc>().add(const NoteFormEvent.saved()),
           ),
         ],
       ),
       body: BlocBuilder<NoteFormBloc, NoteFormState>(
-        buildWhen: (previous, current) =>
-            previous.showErrorMessages != current.showErrorMessages,
+        buildWhen: (previous, current) => previous.showErrorMessages != current.showErrorMessages,
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ChangeNotifierProvider<FormTodos>(
-              create: (context) => FormTodos(),
+            child: ChangeNotifierProvider(
+              create: (_) => FormTodos(),
               child: Form(
-                autovalidateMode: state.showErrorMessages
-                    ? AutovalidateMode.always
-                    : AutovalidateMode.disabled,
+                autovalidateMode: state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
                 child: SingleChildScrollView(
-                    child: Column(
-                  children: const [
-                    SizedBox(height: 9),
-                    BodyField(),
-                    ColorField(),
-                    TodoList(),
-                    AddTodoTile(),
-                  ],
-                )),
+                  child: Column(
+                    children: const [
+                      SizedBox(height: 9),
+                      BodyField(),
+                      ColorField(),
+                      TodoList(),
+                      AddTodoTile(),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
