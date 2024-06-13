@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_route/auto_route.dart';
@@ -26,56 +27,63 @@ class AppWidget extends StatelessWidget {
         title: 'Notes App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light().copyWith(
-          // primaryColor: Colors.green[800],
           popupMenuTheme: const PopupMenuThemeData(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  side: BorderSide(color: Colors.blue))),
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              side: BorderSide(color: Colors.blue),
+            ),
+          ),
           colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: Colors.green[800], secondary: Colors.blueAccent),
+            primary: Colors.green[800],
+            secondary: Colors.blueAccent,
+          ),
           appBarTheme: ThemeData.light().appBarTheme.copyWith(
-                systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarColor: Colors.black38,
-                  statusBarIconBrightness: Brightness.light,
-                ),
-                color: Colors.green[800],
-                titleTextStyle:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                iconTheme: ThemeData.dark().iconTheme,
-              ),
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.black38,
+              statusBarIconBrightness: Brightness.light,
+            ),
+            color: Colors.green[800],
+            titleTextStyle: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+            iconTheme: ThemeData.dark().iconTheme,
+          ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Colors.blue[800],
             foregroundColor: Colors.white,
           ),
           textTheme: const TextTheme(
-            headline4: TextStyle(
+            headlineMedium: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w600,
               fontSize: 18.0,
               height: 1.3,
             ),
-            headline6: TextStyle(
+            titleLarge: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 17.0,
               height: 1.3,
             ),
-            subtitle1: TextStyle(
+            titleMedium: TextStyle(
               color: Colors.black87,
               fontWeight: FontWeight.w500,
               fontSize: 15.0,
               height: 1.3,
             ),
-            caption: TextStyle(
+            bodySmall: TextStyle(
               fontSize: 14,
               color: Colors.white,
             ),
           ),
-          progressIndicatorTheme:
-              ProgressIndicatorThemeData(color: Colors.blueAccent[800]),
-          textSelectionTheme:
-              const TextSelectionThemeData(cursorColor: Colors.green),
+          progressIndicatorTheme: ProgressIndicatorThemeData(
+            color: Colors.blueAccent[800],
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Colors.green,
+          ),
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -98,7 +106,7 @@ class AppWidget extends StatelessWidget {
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-              primary: Colors.blue[800],
+              backgroundColor: Colors.blue[800],
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               elevation: 6,
               shape: RoundedRectangleBorder(
